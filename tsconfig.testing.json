@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": false,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "rootDir": "./",
+    "baseUrl": "./",
+    "typeRoots": ["./src/@types/"],
+    "types": ["node", "mocha", "chai", "reflect-metadata"],
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "lib": ["es6", "dom", "dom.iterable", "scripthost"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".eslintrc.js",
+    "test/**/*.ts",
+    "tests/**/*.ts",
+    "test/**/*.tsx",
+    "tests/**/*.tsx"
+  ],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}
