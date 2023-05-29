@@ -1,8 +1,9 @@
 {
   "name": "magnetic-core",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Another Node.js framework",
-  "main": "index.js",
+  "main": "dist/magnetic-core.js",
+  "types": "dist/magnetic-core.d.ts",
   "scripts": {
     "serve": "NODE_ENV=development nodemon src/index.ts --watch src/ --watch config/",
     "compile": "npm run pre-build && tsc --project tsconfig.prod.json",
