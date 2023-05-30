@@ -1,5 +1,5 @@
 /**
- * A Universally Unique IDentifier (UUID) URN Namespace
+ * This is an implementation of Universally Unique Identifier (UUID) URN Namespace
  * variant 1
  * version 4
  */
@@ -14,7 +14,7 @@ export class UUID extends String {
   static readonly VARIANT_GROUP_INDEX = 3;
 
   static readonly regexpV4 =
-    /[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[8-b][0-9a-f]{3}-[0-9a-f]{12}/i;
+    /[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[8-b][\da-f]{3}-[\da-f]{12}/i;
 
   static readonly NIL: string = "00000000-0000-0000-0000-000000000000";
 
@@ -78,11 +78,11 @@ export class UUID extends String {
   }
 
   get version(): number {
-    return this.isNilUUID() ? 0 : this._version;
+    return this._version;
   }
 
   get variant(): number {
-    return this.isNilUUID() ? 0 : this._variant;
+    return this._variant;
   }
 
   get URN(): string {

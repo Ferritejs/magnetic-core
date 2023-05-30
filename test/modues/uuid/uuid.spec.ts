@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { UUID } from "~/UUID";
+import { UUID } from "~/modules/uuid";
 
 describe("tests of @core7/uuid", () => {
   describe("creates an item of UUID: `new UUID()`", () => {
