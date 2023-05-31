@@ -1,7 +1,7 @@
 {
   "name": "magnetic-core",
-  "version": "0.0.3",
-  "description": "Another Node.js framework",
+  "version": "0.0.4",
+  "description": "A core library",
   "main": "dist/magnetic-core.js",
   "types": "dist/magnetic-core.d.ts",
   "scripts": {
