@@ -41,7 +41,7 @@ module.exports = {
   target: "node",
   mode: "production",
   entry: {
-    [name]: "./src/index.ts",
+    [name]: "./src/magnetic-core.ts",
   },
   output: {
     path: outpath,

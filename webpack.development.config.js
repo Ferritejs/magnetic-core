@@ -19,6 +19,10 @@ class File extends String {
   }
 }
 
+Object.keys(directories).forEach((name) => {
+  directories[name] = directories[name].replace(/\$base|\$\{base\}/, directories.base);
+});
+
 const outpath = path.normalize(
   path.join(path.resolve(path.dirname(main), directories.dev)),
 );
@@ -42,7 +46,7 @@ module.exports = {
   mode: "development",
   devtool: "inline-source-map",
   entry: {
-    [name]: "./src/index.ts",
+    [name]: "./src/magnetic-core.ts",
   },
   output: {
     path: outpath,
