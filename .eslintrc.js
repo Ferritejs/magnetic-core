@@ -30,6 +30,10 @@ module.exports = {
     // project: "tsconfig.json",
     sourceType: "module",
   },
+  ignorePatterns: [
+    "webpack.development.config.js",
+    "webpack.production.config.js",
+  ],
   rules: {
     "no-process-exit": "off",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
