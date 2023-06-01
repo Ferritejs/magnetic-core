@@ -9,8 +9,8 @@
     "paths": {
       "~/*": ["./src/*"]
     },
-    "resolveJsonModule": true /* in case you are importing JSON files */,
-    "outDir": "./build",
+    "resolveJsonModule": true,
+    "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

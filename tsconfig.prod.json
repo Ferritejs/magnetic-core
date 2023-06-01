@@ -10,7 +10,7 @@
       "~/*": ["./src/*"]
     },
     "resolveJsonModule": true,
-    "outDir": "./build",
+    "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
