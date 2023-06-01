@@ -88,12 +88,12 @@ export class Result<T = any, E extends Error = Error>
     return result;
   }
 
-  static Try<TReturn>(
+  static Try<T>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fn: (...arg: any[]) => TReturn | Promise<TReturn>,
+    fn: (...arg: any[]) => T | Promise<T>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...args: any[]
-  ): Result<TReturn> | Promise<Result<TReturn>> {
+  ): Result<T> | Promise<Result<T>> {
     try {
       const ret = fn(...args);
       return !(ret instanceof Promise)
@@ -104,11 +104,11 @@ export class Result<T = any, E extends Error = Error>
               .catch((err) => {
                 const error =
                   err instanceof Error ? err : new Error(String(err));
-                resolve(new Result<TReturn>(error));
+                resolve(new Result<T>(error));
               });
           });
     } catch (e) {
-      return new Result<TReturn>(e instanceof Error ? e : new Error(String(e)));
+      return new Result<T>(e instanceof Error ? e : new Error(String(e)));
     }
   }
 }
