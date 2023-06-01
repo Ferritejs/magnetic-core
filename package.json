@@ -6,7 +6,7 @@
   "types": "dist/magnetic-core.d.ts",
   "scripts": {
     "serve": "NODE_ENV=development nodemon src/index.ts --watch src/ --watch config/",
-    "compile": "npm run pre-build && tsc --project tsconfig.prod.json",
+    "compile": "npm run pre-build && tsc --declaration --project tsconfig.prod.json",
     "build": "npm run build:prod",
     "build:tsc": "npm run compile",
     "build:dev": "npm run pre-build && NODE_ENV=development webpack --config ./webpack.development.config",
@@ -36,9 +36,9 @@
   "homepage": "https://github.com/Ferritejs/magnetic-core#readme",
   "directories": {
     "base": "./build",
-    "out": "./build/out",
-    "dev": "./build/dev",
-    "prod": "./build/prod"
+    "dev": "./$base/dev",
+    "test": "./$base/test",
+    "prod": "./$base/prod"
   },
   "husky": {
     "hooks": {
