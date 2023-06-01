@@ -1,13 +1,14 @@
 {
   "name": "magnetic-core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A core library",
   "main": "dist/magnetic-core.js",
   "types": "dist/magnetic-core.d.ts",
   "scripts": {
     "serve": "NODE_ENV=development nodemon src/index.ts --watch src/ --watch config/",
-    "compile": "npm run pre-build && tsc --declaration --project tsconfig.prod.json",
-    "build": "npm run build:prod",
+    "compile": "npm run pre-build && tsc --declaration --project tsconfig.prod.json && mv ./dist/src/* ./dist && rm -r ./dist/src",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && npm run compile",
     "build:tsc": "npm run compile",
     "build:dev": "npm run pre-build && NODE_ENV=development webpack --config ./webpack.development.config",
     "build:prod": "npm run pre-build && NODE_ENV=production webpack --config ./webpack.production.config",
