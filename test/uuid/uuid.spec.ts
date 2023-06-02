@@ -1,8 +1,9 @@
 import { assert } from "chai";
-import { UUID } from "~/modules/uuid";
+import { UUID } from "~/uuid";
 
 describe("tests of @core7/uuid", () => {
   describe("creates an item of UUID: `new UUID()`", () => {
+    // eslint-disable-next-line sonarjs/no-duplicate-string
     it("it doesn't throw any errors", () => {
       assert.doesNotThrow(() => new UUID());
     });
@@ -25,6 +26,7 @@ describe("tests of @core7/uuid", () => {
     });
   });
   describe("checks out an item of UUID: `UUID.match(UUID.genUUID4().toString())`", () => {
+    // eslint-disable-next-line sonarjs/no-duplicate-string
     it("it must be true", () => {
       assert.isTrue(UUID.match(UUID.genUUID4().toString()));
     });
