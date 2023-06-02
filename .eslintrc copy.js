@@ -12,13 +12,12 @@ module.exports = {
       },
     },
   },
-  //parser: "@typeslintrcpescript-eslint/parser",
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint/eslint-plugin", "optimize-regex"],
   extends: [
     "prettier",
     "plugin:prettier/recommended",
-    "eslint:re.eslintrccommended",
+    "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:node/recommended",
@@ -31,6 +30,11 @@ module.exports = {
     // project: "tsconfig.json",
     sourceType: "module",
   },
+  ignorePatterns: [
+    "dist",
+    "webpack.development.config.js",
+    "webpack.production.config.js",
+  ],
   rules: {
     "no-process-exit": "off",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -100,6 +104,7 @@ module.exports = {
       files: [
         "**/__tests__/*.{j,t}s?(x)",
         "**/tests/unit/**/*.spec.{j,t}s?(x)",
+        "**/test/unit/**/*.spec.{j,t}s?(x)",
       ],
       env: {
         mocha: true,
