@@ -1,25 +1,21 @@
 const fs = require("fs/promises");
 const path = require("path");
+const dirs = require("../package.json").directories;
 
-const PRG_PATH = path.join(__dirname, "..");
-const OUT = path.join(
-  PRG_PATH,
-  require(path.join(PRG_PATH, "package.json")).directories.base,
-);
+Object.keys(dirs).forEach((name) => {
+  dirs[name] = path.normalize(dirs[name].replace(/\$base|\${base}/, dirs.base));
+});
+
+const { base, bundle } = dirs;
+
+const PKG_PATH = path.join(__dirname, "..", bundle);
+const DIST_PATH = path.join(__dirname, "..", base);
 
 (async () => {
   try {
-    const outDirStat = await fs.stat(OUT);
-    if (outDirStat.isDirectory()) {
-      (await fs.readdir(OUT, { withFileTypes: true }))
-        .filter((o) => o.isDirectory())
-        .forEach(async (dir) => {
-          const p = path.join(PRG_PATH, dir.name);
-          await fs.rm(p, { recursive: true, force: true });
-        });
-      await fs.rm(OUT, { recursive: true, force: true });
-    }
-  } catch (_) {
-    // EMPTY
+    await fs.rm(PKG_PATH, { recursive: true, force: true });
+    await fs.rm(DIST_PATH, { recursive: true, force: true });
+  } catch (error) {
+    console.log(error);
   }
 })();
