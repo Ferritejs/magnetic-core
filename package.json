@@ -1,24 +1,23 @@
 {
   "name": "magnetic-core",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A core library",
-  "main": "dist/magnetic-core.js",
-  "types": "dist/magnetic-core.d.ts",
+  "main": "magnetic-core.js",
+  "types": "magnetic-core.d.ts",
   "scripts": {
-    "compile": "OUT=`echo 'console.log(require(\"./package.json\").directories.base)' | node -` && tsc --declaration --project tsconfig.prod.json && mv ./$OUT/src/* ./$OUT && rm -r ./$OUT/src",
-    "clean": "node ./bin/clean.js",
-    "pre-build": "node ./bin/pre-build.js",
-    "post-build": "node ./bin/post-build.js",
-    "build": "npm run clean && npm run compile && npm run post-build",
-    "build:tsc": "npm run compile",
-    "build:dev": "npm run pre-build && NODE_ENV=development webpack --config ./webpack.development.config",
-    "build:prod": "npm run pre-build && NODE_ENV=production webpack --config ./webpack.production.config",
+    "builder:clean": "node ./bin/clean.js",
+    "builder:pre-build": "node ./bin/pre-build.js",
+    "builder:compile": "DIST=`node ./bin/resolve.js base` && tsc --declaration --project tsconfig.prod.json && mv ./$DIST/src/* ./$DIST && rm -r ./$DIST/src",
+    "builder:post-build": "DIST=`node ./bin/resolve.js base` && rm -r $DIST/dev $DIST/test $DIST/prod && node ./bin/post-build.js",
+    "build": "npm run builder:clean && npm run builder:pre-build && npm run builder:compile && npm run builder:post-build",
+    "builder:dev": "npm run pre-build && NODE_ENV=development webpack --config ./webpack.development.config",
+    "builder:prod": "npm run pre-build && NODE_ENV=production webpack --config ./webpack.production.config",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --config .mocharc.jsonc",
     "test:watch": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha --config .mocharc.jsonc --watch",
     "test:coverage": "nyc npm run test",
-    "prepare": "husky install && npm run build",
+    "prepare": "husky install && build",
     "git:pre-commit": "npm run lint && npm run test",
     "git:ignore-pre-commit": "git commit --no-verify",
     "init:vscode": "mkdir -p .vscode; echo \"{\\\"telemetry.enableCrashReporter\\\":false,\\\"telemetry.enableTelemetry\\\":false,\\\"cSpell.language\\\":\\\"en,`echo $LANG | sed -r 's/_.*//'`\\\",\\\"cmake.configureOnOpen\\\":false,\\\"editor.defaultFormatter\\\":\\\"esbenp.prettier-vscode\\\",\\\"editor.formatOnSave\\\":true,\\\"editor.formatOnPaste\\\":false,\\\"files.watcherExclude\\\":{\\\"**/target\\\":true}}\" > .vscode/settings.json"
@@ -37,7 +36,8 @@
     "base": "./dist",
     "dev": "./$base/dev",
     "test": "./$base/test",
-    "prod": "./$base/prod"
+    "prod": "./$base/prod",
+    "bundle": "./$base/package"
   },
   "husky": {
     "hooks": {
