@@ -20,7 +20,10 @@ class File extends String {
 }
 
 Object.keys(directories).forEach((name) => {
-  directories[name] = directories[name].replace(/\$base|\$\{base\}/, directories.base);
+  directories[name] = directories[name].replace(
+    /\$base|\$\{base\}/,
+    directories.base,
+  );
 });
 
 const outpath = path.normalize(
