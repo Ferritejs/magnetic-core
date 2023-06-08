@@ -13,6 +13,8 @@ const DIST_PATH = path.join(PRG_PATH, dirs.base);
 const PKG_PATH = path.join(PRG_PATH, dirs.bundle);
 const PKG_DIR = path.basename(PKG_PATH);
 
+cfg.prepare = undefined;
+
 (async () => {
   (await fs.readdir(DIST_PATH, { withFileTypes: true })).forEach((obj) => {
     if (obj.name !== PKG_DIR) {
