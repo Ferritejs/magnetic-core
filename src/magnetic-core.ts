@@ -1,5 +1,6 @@
 import fp from "./fp";
 import uuid from "./uuid";
+import node from "./node";
 
-export { fp, uuid };
-export default { fp, uuid };
+export { fp, uuid, node };
+export default { fp, uuid, node };

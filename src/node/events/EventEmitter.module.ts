@@ -6,7 +6,7 @@ if (typeof module === "object" && typeof module.exports === "object") {
   const { EventEmitter } = require("events");
   Ctor = EventEmitter;
 } else {
-  Ctor = require("./EventEmitter.class.ts");
+  Ctor = require("./EventEmitter.class");
 }
 
 export default Ctor;
