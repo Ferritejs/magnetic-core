@@ -1,6 +1,6 @@
 {
   "name": "magnetic-core",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A core library",
   "main": "magnetic-core.js",
   "types": "magnetic-core.d.ts",
