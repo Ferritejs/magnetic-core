@@ -16,6 +16,9 @@ export class UUID extends String {
   static readonly regexpV4 =
     /[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[8-b][\da-f]{3}-[\da-f]{12}/i;
 
+  static readonly regexp =
+    /[\da-f]{8}(?:-[\da-f]{4}){2}-[8-b][\da-f]{3}-[\da-f]{12}/i;
+
   static readonly NIL: string = "00000000-0000-0000-0000-000000000000";
 
   private static getVariantGroupForUUIDv4(): string {
@@ -74,7 +77,7 @@ export class UUID extends String {
   }
 
   static match(value: string): boolean {
-    return UUID.regexpV4.test(value);
+    return UUID.regexp.test(value);
   }
 
   get version(): number {
