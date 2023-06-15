@@ -1,4 +1,6 @@
-export * as events from "./events.module";
+import * as events from "./events.module";
+export default events;
+
 export { EventEmitter } from "./EventEmitter.class";
 export { getEventListeners } from "./events.module";
 export { getMaxListeners } from "./events.module";
