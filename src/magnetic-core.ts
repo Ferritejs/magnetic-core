@@ -1,6 +1,6 @@
-import fp from "~/fp";
-import uuid from "~/uuid";
-import events from "~/events";
+import fp from "./fp";
+import uuid from "./uuid";
+import events from "./events";
 
 export { fp, uuid, events };
 export default { fp, uuid, events };
