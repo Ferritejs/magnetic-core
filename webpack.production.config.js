@@ -2,7 +2,7 @@ const path = require("path");
 const exec = require("child_process").exec;
 const { main, name, directories } = require("./package.json");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
-
+const TerserPlugin = require("terser-webpack-plugin");
 class File extends String {
   #name;
   #ext;
@@ -32,6 +32,7 @@ const outpath = path.normalize(
 const outfile = new File({ name: `${name}.bundle`, ext: "js" });
 
 const post_build = () => {
+  /*
   const commands = [
     `cp ${__dirname}/${directories.out}/*.d.ts ${outpath}`,
     `mv ${outpath}/index.d.ts ${outpath}/${outfile.name}.d.ts`,
@@ -42,11 +43,13 @@ const post_build = () => {
       if (stderr) process.stderr.write(stderr);
     });
   });
+  */
 };
 
 module.exports = {
-  target: "node",
+  // target: "node",
   mode: "production",
+  devtool: "source-map",
   entry: {
     [name]: "./src/magnetic-core.ts",
   },
@@ -54,9 +57,26 @@ module.exports = {
     path: outpath,
     filename: `${outfile}`,
   },
+  optimization: {
+    minimize: true,
+    // mangleExports: false,
+    // mangleWasmImports: false,
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          keep_classnames: true,
+          keep_fnames: true,
+          mangle: false,
+          compress: true,
+        },
+      }),
+    ],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src/"),
+      "~": path.resolve(__dirname, "src/"),
     },
     plugins: [new TsconfigPathsPlugin()],
     extensions: [".tsx", ".ts", ".js"],
