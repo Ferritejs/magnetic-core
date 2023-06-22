@@ -34,18 +34,14 @@ export class Result<T = any, E extends Error = Error>
     return new Option<E>(this._error);
   }
 
-  then(callback: (value: T) => void): this {
-    if (this.isOk()) {
-      callback(this._value as T);
-    }
-    return this;
-  }
-
-  catch(callback: (error: E) => void): Result<T, E> {
-    if (this.isError()) {
-      callback(this._error as E);
-    }
-    return this;
+  promisify(): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (this.isOk()) {
+        resolve(this._value as T);
+      } else {
+        reject(this._error as E);
+      }
+    });
   }
 
   bind<U>(fn: (v: T) => Monad<U>): Monad<U> {
