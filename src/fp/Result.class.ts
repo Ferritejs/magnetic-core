@@ -1,6 +1,7 @@
 import { Monad } from "./Monad.iface";
 import { AMonad } from "./AMonad.class";
 import { Option } from "./Option.class";
+import { TResult } from "./TResult.class";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class Result<T = any, E extends Error = Error>
@@ -42,6 +43,11 @@ export class Result<T = any, E extends Error = Error>
         reject(this._error as E);
       }
     });
+  }
+
+  toThenable(): TResult<T, E> {
+    const arg = this.isOk() ? (this._value as T) : (this._error as E);
+    return new TResult<T, E>(arg);
   }
 
   bind<U>(fn: (v: T) => Monad<U>): Monad<U> {
