@@ -9,5 +9,7 @@ export { Option } from "./Option.class";
 export { Result } from "./Result.class";
 export { Some } from "./Some.impl";
 export { Try } from "./Try.impl";
+export { TResult } from "./TResult.class";
+export { Simple } from "./Simple.class";
 
 export default fp;

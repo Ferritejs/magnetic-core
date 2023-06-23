@@ -10,7 +10,7 @@ export class TResult<T = any, E extends Error = Error> extends Result<T, E> {
   }
 
   catch(callback: (error: E) => void): TResult<T, E> {
-    if (this.isOk()) {
+    if (this.isError()) {
       callback(this._error as E);
     }
     return this;

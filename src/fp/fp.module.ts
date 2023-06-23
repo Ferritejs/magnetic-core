@@ -7,3 +7,5 @@ export * from "./Option.class";
 export * from "./Result.class";
 export * from "./Some.impl";
 export * from "./Try.impl";
+export * from "./TResult.class";
+export * from "./Simple.class";
