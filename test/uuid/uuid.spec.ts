@@ -15,6 +15,15 @@ describe("tests of @core7/uuid", () => {
       );
     });
   });
+  describe('creates item of the UUID from GUUID: `new UUID("{92fa397b-0244-4eb5-9a57-9c83cd046bcb}").toString() === "92fa397b-0244-4eb5-9a57-9c83cd046bcb"`', () => {
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    it("it must be true", () => {
+      assert.isTrue(
+        new UUID("92fa397b-0244-4eb5-9a57-9c83cd046bcb").toString() ===
+          "92fa397b-0244-4eb5-9a57-9c83cd046bcb",
+      );
+    });
+  });
   describe('creates an item of UUID: `new UUID("HELLO")`', () => {
     it("it must throw the error", () => {
       assert.throw(() => new UUID("HELLO"));
@@ -72,6 +81,14 @@ describe("tests of @core7/uuid", () => {
       assert.isTrue(
         new UUID(UUID.NIL).URN ===
           "urn:uuid:00000000-0000-0000-0000-000000000000",
+      );
+    });
+  });
+  describe('checks out GUUID of an item of UUID: `new UUID("a2fa397b-0244-4eb5-9a57-9c83cd046bcb").GUUID === "{a2fa397b-0244-4eb5-9a57-9c83cd046bcb}"`', () => {
+    it("it must be true", () => {
+      assert.isTrue(
+        new UUID("a2fa397b-0244-4eb5-9a57-9c83cd046bcb").GUUID ===
+          "{a2fa397b-0244-4eb5-9a57-9c83cd046bcb}",
       );
     });
   });
