@@ -14,10 +14,10 @@ export class UUID extends String {
   static readonly VARIANT_GROUP_INDEX = 3;
 
   static readonly regexpV4 =
-    /[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[8-b][\da-f]{3}-[\da-f]{12}/i;
+    /{?[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[8-b][\da-f]{3}-[\da-f]{12}}?/i;
 
   static readonly regexp =
-    /[\da-f]{8}(?:-[\da-f]{4}){2}-[8-b][\da-f]{3}-[\da-f]{12}/i;
+    /{?[\da-f]{8}(?:-[\da-f]{4}){2}-[8-b][\da-f]{3}-[\da-f]{12}}?/i;
 
   static readonly NIL: string = "00000000-0000-0000-0000-000000000000";
 
@@ -63,7 +63,7 @@ export class UUID extends String {
   constructor(value: string | UUID = "") {
     const v = value.toString();
     if (v === "" || UUID.match(v) || v === UUID.NIL) {
-      super(v || UUID._genValueV4());
+      super(v.replace(/[{}]/g, "") || UUID._genValueV4());
       if (this.isNilUUID()) {
         this._variant = 0;
         this._version = 0;
@@ -90,6 +90,10 @@ export class UUID extends String {
 
   get URN(): string {
     return `urn:uuid:${this}`;
+  }
+
+  get GUUID(): string {
+    return `{${this.toString()}}`;
   }
 
   isNilUUID(): boolean {
