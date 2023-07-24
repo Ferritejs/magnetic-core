@@ -1,4 +1,4 @@
-import { Result } from "~/fp";
+import { Result } from "../../fp";
 import {
   ComparisonType,
   Equal,
