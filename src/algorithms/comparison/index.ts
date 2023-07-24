@@ -31,7 +31,7 @@ export {
   isNotEqual,
   isNotGreater,
   isIncomparable,
-  compare,
+  // compare,
 } from "./comparison.impl";
 
 import * as comparison from "./comparison.module";

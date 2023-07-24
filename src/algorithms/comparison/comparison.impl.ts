@@ -5,9 +5,9 @@ import {
   GREATER,
   INCOMPARABLE,
 } from "./Comparison.type";
-import { CResult } from "./ComparisonResult.class";
-import { ReflectType } from "../../reflect/ReflectType.class";
-import { Integral } from "../../types";
+// import { CResult } from "./ComparisonResult.class";
+// import { ReflectType } from "../../reflect/ReflectType.class";
+// import { Integral } from "../../types";
 
 export const isLess = (value: ComparisonType) => value === LESS;
 export const isEqual = (value: ComparisonType) => value === EQUAL;
@@ -17,12 +17,7 @@ export const isNotLess = (value: ComparisonType) => value !== LESS;
 export const isNotEqual = (value: ComparisonType) => value !== EQUAL;
 export const isNotGreater = (value: ComparisonType) => value !== GREATER;
 
-/**
- *
- * @param f
- * @param s
- * @returns
- */
+/** Don't use it
 export const compareIntegral = <TNumber extends Integral = number>(
   f: TNumber,
   s: TNumber,
@@ -49,3 +44,4 @@ export const compare = <T extends bigint | number | string | symbol>(
   }
   return result.isEqual() ? result : new CResult(INCOMPARABLE);
 };
+*/
