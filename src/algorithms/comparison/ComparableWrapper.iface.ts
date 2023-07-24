@@ -4,5 +4,8 @@ import { CResult } from "./ComparisonResult.class";
 
 export interface IComparableWrapper<T> extends IComparable<T> {
   value: T;
-  compare(other: T, comparator?: Comparator<T>): CResult;
+  compare(
+    other: T | IComparableWrapper<T>,
+    comparator?: Comparator<T>,
+  ): CResult;
 }

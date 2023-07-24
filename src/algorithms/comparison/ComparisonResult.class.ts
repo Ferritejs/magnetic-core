@@ -47,15 +47,15 @@ export class CResult extends Result<ComparisonType> {
   }
 
   IsNotLess(): boolean {
-    return this._value === CResult.NOT_LESS;
+    return this._value !== CResult.LESS;
   }
 
   IsNotEqual(): boolean {
-    return this._value === CResult.NOT_EQUAL;
+    return this._value !== CResult.EQUAL;
   }
 
   IsNotGreater(): boolean {
-    return this._value === CResult.NOT_GREATER;
+    return this._value !== CResult.GREATER;
   }
 
   static createAsEqual(): CResult {

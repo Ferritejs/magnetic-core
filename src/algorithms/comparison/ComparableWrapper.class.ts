@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IComparableWrapper } from "./ComparableWrapper.iface";
 import { Comparator } from "./Comparator.type";
 import { CResult } from "./ComparisonResult.class";
@@ -19,9 +20,18 @@ export class ComparableWrapper<T = any>
     return this._value;
   }
 
-  compare(other: T, comparator?: Comparator<T> | undefined): CResult {
+  compare(
+    other: T | IComparableWrapper<T>,
+    comparator?: Comparator<T> | undefined,
+  ): CResult {
+    const value =
+      other &&
+      typeof other !== "object" &&
+      typeof (other as any).compare === "function"
+        ? ((other as any).value as T)
+        : (other as T);
     return comparator
-      ? new CResult(comparator(this._value, other))
-      : new CResult(this._cmp(this._value, other));
+      ? new CResult(comparator(this._value, value))
+      : new CResult(this._cmp(this._value, value));
   }
 }
