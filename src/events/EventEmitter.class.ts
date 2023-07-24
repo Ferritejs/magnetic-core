@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { eventEmitterBluePrint } from "./EventEmitterBluePrint.impl";
+import { eventEmitterBlueprint } from "./EventEmitterBlueprint.impl";
 import { Listener } from "./types/Listener.type";
 import { EventName } from "./types/EventName.type";
 import { IListenerContext } from "./ListenerContext.iface";
@@ -15,7 +15,7 @@ export class EventEmitter implements IEventEmitter {
   private static readonly __REMOVE_LISTENER_EVENT = "removeListener";
 
   protected _events: Map<EventName, IEventContext>;
-  protected _maxListeners: number = eventEmitterBluePrint.defaultMaxListeners;
+  protected _maxListeners: number = eventEmitterBlueprint.defaultMaxListeners;
 
   constructor() {
     this._events = new Map();

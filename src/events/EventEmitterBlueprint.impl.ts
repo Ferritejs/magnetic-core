@@ -1,4 +1,4 @@
-class EventEmitterBluePrint {
+class EventEmitterBlueprint {
   protected _maxListeners = 10;
 
   get defaultMaxListeners(): number {
@@ -14,4 +14,4 @@ class EventEmitterBluePrint {
   }
 }
 
-export const eventEmitterBluePrint = new EventEmitterBluePrint();
+export const eventEmitterBlueprint = new EventEmitterBlueprint();
