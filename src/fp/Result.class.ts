@@ -117,17 +117,27 @@ export class Result<T = any, E extends Error = Error>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class TResult<T = any, E extends Error = Error> extends Result<T, E> {
-  then(callback: (value: T) => void): TResult<T, E> {
+  then(
+    onFulfilled: (value: T) => void,
+    onRejected?: (error: E) => void,
+  ): TResult<T, E> {
     if (this.isOk()) {
-      callback(this._value as T);
+      onFulfilled(this._value as T);
+    } else {
+      onRejected?.(this._error as E);
     }
     return this;
   }
 
-  catch(callback: (error: E) => void): TResult<T, E> {
+  catch(onRejected: (error: E) => void): TResult<T, E> {
     if (this.isError()) {
-      callback(this._error as E);
+      onRejected(this._error as E);
     }
+    return this;
+  }
+
+  finally(onFinally: () => void): TResult {
+    onFinally();
     return this;
   }
 }
