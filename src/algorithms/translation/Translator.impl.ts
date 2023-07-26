@@ -4,7 +4,7 @@ import { Decoder } from "./Decoder.type";
 import { IEncoder } from "./Encoder.iface";
 import { Encoder } from "./Encoder.type";
 
-export const translate = <T, TReturn>(
+export const translate = async <T, TReturn>(
   translator: Encoder<T, TReturn> | Decoder<T, TReturn>,
   data: T,
   mode: "encode" | "decode" = "encode",
