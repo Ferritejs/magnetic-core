@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Monad } from "./Monad.iface";
 import { AMonad } from "./AMonad.class";
 import { Option } from "./Option.class";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class Result<T = any, E extends Error = Error>
   extends AMonad<T>
   implements Monad<T>
@@ -54,10 +54,14 @@ export class Result<T = any, E extends Error = Error>
     return this.isOk() ? fn(this._value as T) : new Option<U>();
   }
 
-  pipe<TReturn>(
+  pipe<U, TReturn extends Promise<U> | U = U>(
     fn: (value: T) => TReturn,
-  ): Result<TReturn> | Promise<Result<TReturn>> | Result<T> {
-    return this.isOk() ? Result.Try(fn, this._value as T) : this;
+  ): TReturn extends Promise<U> ? Promise<Result<U>> : Result<U> {
+    return (
+      this.isOk()
+        ? Result.Try(fn, this._value as T)
+        : new Result<U>(this._error as E)
+    ) as TReturn extends Promise<U> ? Promise<Result<U>> : Result<U>;
   }
 
   unwrap(): [T | null, E | null] {
@@ -71,7 +75,6 @@ export class Result<T = any, E extends Error = Error>
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static createFrom<T = any, E extends Error = Error>({
     ok = undefined,
     error = undefined,
@@ -90,17 +93,17 @@ export class Result<T = any, E extends Error = Error>
     return result;
   }
 
-  static Try<T>(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fn: (...arg: any[]) => T | Promise<T>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static Try<T, TReturn extends Promise<T> | T = T>(
+    fn: (...arg: any[]) => TReturn,
     ...args: any[]
-  ): Result<T> | Promise<Result<T>> {
+  ): TReturn extends Promise<T> ? Promise<Result<T>> : Result<T> {
     try {
       const ret = fn(...args);
       return !(ret instanceof Promise)
-        ? new Result(ret)
-        : new Promise((resolve) => {
+        ? (new Result<T>(ret as T) as TReturn extends Promise<T>
+            ? Promise<Result<T>>
+            : Result<T>)
+        : (new Promise((resolve) => {
             ret
               .then((res) => resolve(new Result(res)))
               .catch((err) => {
@@ -108,9 +111,11 @@ export class Result<T = any, E extends Error = Error>
                   err instanceof Error ? err : new Error(String(err));
                 resolve(new Result<T>(error));
               });
-          });
+          }) as TReturn extends Promise<T> ? Promise<Result<T>> : Result<T>);
     } catch (e) {
-      return new Result<T>(e instanceof Error ? e : new Error(String(e)));
+      return new Result<T>(
+        e instanceof Error ? e : new Error(String(e)),
+      ) as TReturn extends Promise<T> ? Promise<Result<T>> : Result<T>;
     }
   }
 }
