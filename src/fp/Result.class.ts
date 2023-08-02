@@ -134,6 +134,11 @@ export class TResult<T = any, E extends Error = Error> extends Result<T, E> {
     return this;
   }
 
+  toResult(): Result<T, E> {
+    const value = this._value ?? this._error;
+    return new Result<T, E>(value as T | E);
+  }
+
   catch(onRejected: (error: E) => void): TResult<T, E> {
     if (this.isError()) {
       onRejected(this._error as E);
