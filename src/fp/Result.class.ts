@@ -64,7 +64,14 @@ export class Result<T = any, E extends Error = Error>
     ) as TReturn extends Promise<U> ? Promise<Result<U>> : Result<U>;
   }
 
-  unwrap(): [T | null, E | null] {
+  unwrap(): T {
+    if (this._error) {
+      throw this._error;
+    }
+    return this._value as T;
+  }
+
+  toTuple(): [T | null, E | null] {
     return [this._value, this._error];
   }
 
