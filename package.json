@@ -20,7 +20,7 @@
     "prepare": "husky install && build",
     "git:pre-commit": "npm run lint && npm run test",
     "git:ignore-pre-commit": "git commit --no-verify",
-    "init:vscode": "mkdir -p .vscode; echo \"{\\\"telemetry.enableCrashReporter\\\":false,\\\"telemetry.enableTelemetry\\\":false,\\\"cSpell.language\\\":\\\"en,`echo $LANG | sed -r 's/_.*//'`\\\",\\\"cmake.configureOnOpen\\\":false,\\\"editor.defaultFormatter\\\":\\\"esbenp.prettier-vscode\\\",\\\"editor.formatOnSave\\\":true,\\\"editor.formatOnPaste\\\":false,\\\"files.watcherExclude\\\":{\\\"**/target\\\":true}}\" > .vscode/settings.json"
+    "init:vscode": "mkdir -p .vscode; echo \"{\\\"telemetry.enableCrashReporter\\\":false,\\\"cSpell.language\\\":\\\"en,ru,fr,de-de,it\\\",\\\"cmake.configureOnOpen\\\":false,\\\"editor.defaultFormatter\\\":\\\"esbenp.prettier-vscode\\\",\\\"editor.formatOnSave\\\":true,\\\"editor.formatOnPaste\\\":false,\\\"files.watcherExclude\\\":{\\\"**/target\\\":true},\\\"[typescript]\\\":{\\\"editor.defaultFormatter\\\":\\\"esbenp.prettier-vscode\\\",\\\"typescript.preferences.importModuleSpecifier\\\":\\\"shortest\\\"},\\\"cSpell.words\\\":[]}\" > .vscode/settings.json"
   },
   "repository": {
     "type": "git",
@@ -34,10 +34,10 @@
   "homepage": "https://github.com/Ferritejs/magnetic-core#readme",
   "directories": {
     "base": "./dist",
-    "dev": "./$base/dev",
-    "test": "./$base/test",
-    "prod": "./$base/prod",
-    "bundle": "./$base/package"
+    "dev": "$base/dev",
+    "test": "$base/test",
+    "prod": "$base/prod",
+    "bundle": "$base/package"
   },
   "husky": {
     "hooks": {
