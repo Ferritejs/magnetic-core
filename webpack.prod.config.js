@@ -1,5 +1,5 @@
 const path = require("path");
-const exec = require("child_process").exec;
+// const exec = require("child_process").exec;
 const { main, name, directories } = require("./package.json");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");

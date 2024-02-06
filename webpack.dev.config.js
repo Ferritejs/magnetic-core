@@ -1,7 +1,8 @@
 const path = require("path");
 const exec = require("child_process").exec;
-const { main, name, directories } = require("./package.json");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const { main, name } = require(path.join(__dirname, "package.json"));
+const directories = require(path.join(__dirname, "bin", "dist-dirs"));
 
 class File extends String {
   #name;
@@ -18,23 +19,14 @@ class File extends String {
     return this.#ext;
   }
 }
-
-Object.keys(directories).forEach((name) => {
-  directories[name] = directories[name].replace(
-    /\$base|\$\{base\}/,
-    directories.base,
-  );
-});
-
-const outpath = path.normalize(
-  path.join(path.resolve(path.dirname(main), directories.dev)),
-);
+const outpath = directories.dev;
 const outfile = new File({ name: `${name}.dev-bundle`, ext: "js" });
+console.log(outpath);
 
 const post_build = () => {
   const commands = [
-    `cp ${__dirname}/${directories.out}/*.d.ts ${outpath}`,
-    `mv ${outpath}/index.d.ts ${outpath}/${outfile.name}.d.ts`,
+    // `cp ${directories.base}/*.d.ts ${outpath}`,
+    // `mv ${outpath}/index.d.ts ${outpath}/${outfile.name}.d.ts`,
   ];
   commands.forEach((cmd) => {
     exec(cmd, (err, stdout, stderr) => {
