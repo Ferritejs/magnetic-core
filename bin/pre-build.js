@@ -1,12 +1,4 @@
-const path = require("path");
-const dirs = require(`${__dirname}/../package.json`).directories;
-const fs = require("fs");
+const { mkdirSync } = require("fs");
+const dirs = require(`${__dirname}/dist-dirs`);
 
-fs.mkdirSync(dirs.base);
-
-Object.keys(dirs).forEach((name) => {
-  dirs[name] = path.normalize(dirs[name].replace(/\$base|\${base}/, dirs.base));
-  if (name !== "base") {
-    fs.mkdirSync(dirs[name]);
-  }
-});
+dirs && Object.values(dirs).forEach((dir) => mkdirSync(dir));

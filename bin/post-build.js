@@ -1,31 +1,35 @@
 const fs = require("fs/promises");
 const path = require("path");
-const fsExtra = require("fs-extra");
-const cfg = require("../package.json");
-const dirs = require("../package.json").directories;
+const packageContent = require(`${__dirname}/../package.json`);
+const dirs = require(`${__dirname}/dist-dirs`);
 
-Object.keys(dirs).forEach((name) => {
-  dirs[name] = path.normalize(dirs[name].replace(/\$base|\${base}/, dirs.base));
-});
+const NEW_CONTENT = {
+  scripts: {
+    run: 'echo "This is a library" | node -',
+  },
+  devDependencies: undefined,
+  husky: undefined,
+  directories: undefined,
+};
 
-const PRG_PATH = path.join(__dirname, "..");
-const DIST_PATH = path.join(PRG_PATH, dirs.base);
-const PKG_PATH = path.join(PRG_PATH, dirs.bundle);
-const PKG_DIR = path.basename(PKG_PATH);
+if (dirs) {
+  // const PRG_PATH = path.join(__dirname, "..");
+  const PKG_PATH = dirs.bundle;
 
-cfg.scripts.prepare = undefined;
-
-(async () => {
-  (await fs.readdir(DIST_PATH, { withFileTypes: true })).forEach((obj) => {
-    if (obj.name !== PKG_DIR) {
-      fsExtra.copy(
-        path.join(DIST_PATH, obj.name),
-        path.join(PKG_PATH, obj.name),
-      );
+  [dirs.dev, dirs.test, dirs.prod].forEach(async (dir) => {
+    try {
+      await fs.rm(dir, { recursive: true, force: true });
+    } catch (err) {
+      console.log(err);
     }
   });
-  await fs.writeFile(
-    path.join(PKG_PATH, "package.json"),
-    JSON.stringify(cfg, null, 2),
-  );
-})();
+
+  Object.assign(packageContent, NEW_CONTENT);
+
+  (async () => {
+    await fs.writeFile(
+      path.join(PKG_PATH, "package.json"),
+      JSON.stringify(packageContent, null, 2),
+    );
+  })();
+}
