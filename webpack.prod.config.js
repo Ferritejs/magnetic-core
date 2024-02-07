@@ -1,61 +1,19 @@
 const path = require("path");
-// const exec = require("child_process").exec;
-const { main, name, directories } = require("./package.json");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-class File extends String {
-  #name;
-  #ext;
-  constructor({ name, ext }) {
-    super(`${name}.${ext}`);
-    this.#name = name;
-    this.#ext = ext;
-  }
-  get name() {
-    return this.#name;
-  }
-  get ext() {
-    return this.#ext;
-  }
-}
-
-Object.keys(directories).forEach((name) => {
-  directories[name] = directories[name].replace(
-    /\$base|\$\{base\}/,
-    directories.base,
-  );
-});
-
-const outpath = path.normalize(
-  path.join(path.resolve(path.dirname(main), directories.prod)),
-);
-const outfile = new File({ name: `${name}.bundle`, ext: "js" });
-
-const post_build = () => {
-  /*
-  const commands = [
-    `cp ${__dirname}/${directories.out}/*.d.ts ${outpath}`,
-    `mv ${outpath}/index.d.ts ${outpath}/${outfile.name}.d.ts`,
-  ];
-  commands.forEach((cmd) => {
-    exec(cmd, (err, stdout, stderr) => {
-      if (stdout) process.stdout.write(stdout);
-      if (stderr) process.stderr.write(stderr);
-    });
-  });
-  */
-};
+const { main, name, source } = require(path.join(__dirname, "package.json"));
+const directories = require(path.join(__dirname, "bin", "dist-dirs"));
 
 module.exports = {
   // target: "node",
   mode: "production",
-  devtool: "source-map",
+  // devtool: "source-map",
   entry: {
-    [name]: "./src/magnetic-core.ts",
+    [name]: path.join(source.path, source.filename),
   },
   output: {
-    path: outpath,
-    filename: `${outfile}`,
+    path: directories.prod,
+    filename: main.replace(".js", ".prod-bundle.js"),
   },
   optimization: {
     minimize: true,
@@ -97,7 +55,9 @@ module.exports = {
   plugins: [
     {
       apply: (compiler) => {
-        compiler.hooks.afterEmit.tap("AfterEmitPlugin", post_build);
+        compiler.hooks.afterEmit.tap("AfterEmitPlugin", () => {
+          // post build script
+        });
       },
     },
   ],

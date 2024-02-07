@@ -4,6 +4,10 @@
   "description": "A core library",
   "main": "magnetic-core.js",
   "types": "magnetic-core.d.ts",
+  "source": {
+    "path": "src",
+    "filename": "magnetic-core.ts"
+  },
   "scripts": {
     "dependencies:update": "node ./bin/update_dependencies.js",
     "builder:clean": "node ./bin/clean.js",
