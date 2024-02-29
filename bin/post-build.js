@@ -5,8 +5,9 @@ const dirs = require(`${__dirname}/dist-dirs`);
 
 const NEW_CONTENT = {
   scripts: {
-    run: 'echo "This is a library" | node -',
+    start: "node welcome.js",
   },
+  source: undefined,
   devDependencies: undefined,
   husky: undefined,
   directories: undefined,
@@ -15,14 +16,6 @@ const NEW_CONTENT = {
 if (dirs) {
   // const PRG_PATH = path.join(__dirname, "..");
   const PKG_PATH = dirs.bundle;
-
-  [dirs.dev, dirs.test, dirs.prod].forEach(async (dir) => {
-    try {
-      await fs.rm(dir, { recursive: true, force: true });
-    } catch (err) {
-      console.log(err);
-    }
-  });
 
   Object.assign(packageContent, NEW_CONTENT);
 
