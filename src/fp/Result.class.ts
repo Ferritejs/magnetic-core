@@ -44,10 +44,10 @@ export class Result<T = any, E extends Error = Error>
     });
   }
 
-  toThenable(): TResult<T, E> {
+  toThenable(): ThenableResult<T, E> {
     const arg = this.isOk() ? (this._value as T) : (this._error as E);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    return new TResult<T, E>(arg);
+    return new ThenableResult<T, E>(arg);
   }
 
   bind<U>(fn: (v: T) => Monad<U>): Monad<U> {
@@ -100,14 +100,14 @@ export class Result<T = any, E extends Error = Error>
     return result;
   }
 
-  static Try<T, TReturn extends Promise<T> | T = T>(
-    fn: (...arg: any[]) => TReturn,
+  static Try<T, R extends Promise<T> | T = T>(
+    fn: (...arg: any[]) => R,
     ...args: any[]
-  ): TReturn extends Promise<T> ? Promise<Result<T>> : Result<T> {
+  ): R extends Promise<T> ? Promise<Result<T>> : Result<T> {
     try {
       const ret = fn(...args);
       return !(ret instanceof Promise)
-        ? (new Result<T>(ret as T) as TReturn extends Promise<T>
+        ? (new Result<T>(ret as T) as R extends Promise<T>
             ? Promise<Result<T>>
             : Result<T>)
         : (new Promise((resolve) => {
@@ -118,21 +118,24 @@ export class Result<T = any, E extends Error = Error>
                   err instanceof Error ? err : new Error(String(err));
                 resolve(new Result<T>(error));
               });
-          }) as TReturn extends Promise<T> ? Promise<Result<T>> : Result<T>);
+          }) as R extends Promise<T> ? Promise<Result<T>> : Result<T>);
     } catch (e) {
       return new Result<T>(
         e instanceof Error ? e : new Error(String(e)),
-      ) as TReturn extends Promise<T> ? Promise<Result<T>> : Result<T>;
+      ) as R extends Promise<T> ? Promise<Result<T>> : Result<T>;
     }
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class TResult<T = any, E extends Error = Error> extends Result<T, E> {
+export class ThenableResult<T = any, E extends Error = Error> extends Result<
+  T,
+  E
+> {
   then(
     onFulfilled: (value: T) => void,
     onRejected?: (error: E) => void,
-  ): TResult<T, E> {
+  ): ThenableResult<T, E> {
     if (this.isOk()) {
       onFulfilled(this._value as T);
     } else {
@@ -146,14 +149,14 @@ export class TResult<T = any, E extends Error = Error> extends Result<T, E> {
     return new Result<T, E>(value as T | E);
   }
 
-  catch(onRejected: (error: E) => void): TResult<T, E> {
+  catch(onRejected: (error: E) => void): ThenableResult<T, E> {
     if (this.isError()) {
       onRejected(this._error as E);
     }
     return this;
   }
 
-  finally(onFinally: () => void): TResult {
+  finally(onFinally: () => void): ThenableResult<T, E> {
     onFinally();
     return this;
   }

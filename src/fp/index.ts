@@ -6,7 +6,7 @@ export { Monad } from "./Monad.iface";
 export { Null } from "./Null.class";
 export { Nullable } from "./Nullable.iface";
 export { Option } from "./Option.class";
-export { Result, TResult } from "./Result.class";
+export { Result, ThenableResult } from "./Result.class";
 export { Some } from "./Some.impl";
 export { Try } from "./Try.impl";
 export { Simple } from "./Simple.class";
