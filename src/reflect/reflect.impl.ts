@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TResult } from "../fp";
+import { ThenableResult } from "../fp";
 import {
   CResult,
   IComparable,
@@ -354,17 +354,19 @@ export class ReflectValue<T = any> implements IComparable<T> {
 
   /**
    * Try to convert the reflect value to a reflect object
-   * @return `TResult<ReflectObject<T>>`
+   * @return `ThenableResult<ReflectObject<T>>`
    */
-  get reflectObject(): TResult<ReflectObject<T extends object ? T : object>> {
+  get reflectObject(): ThenableResult<
+    ReflectObject<T extends object ? T : object>
+  > {
     if (this.reflectType.isObject()) {
-      return new TResult(
+      return new ThenableResult(
         new ReflectObject<T extends object ? T : object>(
           this._value as T extends object ? T : object,
         ),
       );
     } else {
-      return new TResult<ReflectObject<T extends object ? T : object>>(
+      return new ThenableResult<ReflectObject<T extends object ? T : object>>(
         new TypeError(
           `Type ${this.reflectType} is not assignable ot type ${Type.Object}`,
         ),
